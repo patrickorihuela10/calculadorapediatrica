@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Z-Score Infantil (OMS)</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Z-Score Infantil (OMS)</h1>
+
+    <div class="form-grid">
+      <label>Data de Nascimento:<input type="date" id="nascimento"></label>
+      <label>Data da Avaliação:<input type="date" id="avaliacao"></label>
+      <label>Sexo:
+        <select id="sexo">
+          <option value="male">Masculino</option>
+          <option value="female">Feminino</option>
+        </select>
+      </label>
+      <label>Peso (kg):<input type="number" step="0.01" id="peso"></label>
+      <label>Altura (cm):<input type="number" step="0.1" id="altura"></label>
+      <label>Altura do Pai (cm):<input type="number" step="0.1" id="alturaPai"></label>
+      <label>Altura da Mãe (cm):<input type="number" step="0.1" id="alturaMae"></label>
+    </div>
+
+    <button onclick="calcular()">Calcular</button>
+
+    <pre id="resultado"></pre>
+
+    <h2>Gráficos de Crescimento</h2>
+    <div class="charts">
+      <div class="chart-container"><canvas id="graficoHFA"></canvas></div>
+      <div class="chart-container"><canvas id="graficoWFA"></canvas></div>
+      <div class="chart-container"><canvas id="graficoBFA"></canvas></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
