@@ -12,6 +12,64 @@ body {
   padding: 20px;
 }
 
+/* ===== Modal base ===== */
+.modal {
+  display: none; /* escondido por padrão */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* fundo translúcido */
+}
+
+/* ===== Conteúdo do modal ===== */
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+/* ===== Botão de fechar ===== */
+.fechar {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.fechar:hover {
+  color: #000;
+}
+
+/* ===== Botão de imprimir ===== */
+button {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#btnImprimir {
+  margin-top: 12px; /* espaço acima do botão de imprimir */
+}
+
+button:hover {
+  background-color: #388e3c;
+}
+
+
 h1, h2 {
   text-align: center;
   color: #333;
@@ -62,33 +120,98 @@ pre#resultado {
   gap: 20px;
 }
 
+/* === CONTÊINER DOS GRÁFICOS === */
 .chart-container {
   position: relative;
   width: 100%;
-  height: 350px;
-  background: white;
+  max-width: 700px;
+  height: 400px;          /* ✅ altura fixa controlada */
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: all 0.3s;
+  box-sizing: border-box;
 }
 
-.chart-container:active {
-  transform: scale(1.03);
+/* === CONTÊINER DOS GRÁFICOS === */
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  height: 400px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Tela cheia no clique */
-.chart-container.fullscreen {
-  position: fixed !important;
-  top: 0; left: 0;
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* === MODO TELA CHEIA NATIVO === */
+:fullscreen .chart-container,
+.chart-container:fullscreen {
+  background: #fff;
   width: 100vw !important;
   height: 100vh !important;
-  z-index: 1000;
-  background: #fff;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+:fullscreen canvas,
+.chart-container:fullscreen canvas {
+  width: 98vw !important;
+  height: 98vh !important;
+  max-width: 98vw !important;
+  max-height: 98vh !important;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 0;
+}
+
+.chart-title {
+  text-align: center;
+  margin: 0;
+  padding-top: 5px;
+  color: #333;
+  font-size: 16px;
+}
+:fullscreen .chart-title,
+.chart-container:fullscreen .chart-title {
+  display: none;
+}
+
+/* Esconde o título (h3) quando o gráfico estiver em tela cheia */
+
+/* === Oculta o título (h3) durante o modo tela cheia === */
+.chart-container.fullscreen h3 {
+  display: none !important;
+}
+
+/* Compatibilidade com navegadores diferentes */
+:fullscreen .chart-container h3,
+:-webkit-full-screen .chart-container h3,
+:-moz-full-screen .chart-container h3 {
+  display: none !important;
+}
+
 
 @media (max-width: 600px) {
   h1 { font-size: 20px; }
   .form-grid { grid-template-columns: 1fr; }
 }
-
