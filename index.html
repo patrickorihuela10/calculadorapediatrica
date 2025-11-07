@@ -7,9 +7,22 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+<!-- 🔳 Modal de Impressão -->
+<div id="modalImpressao" class="modal">
+  <div class="modal-content">
+    <span class="fechar" onclick="fecharModalImpressao()">&times;</span>
+    <h2>Selecionar gráficos para impressão</h2>
+    <label><input type="checkbox" id="printAltura" checked> Altura para idade</label><br>
+    <label><input type="checkbox" id="printPeso" checked> Peso para idade</label><br>
+    <label><input type="checkbox" id="printIMC" checked> IMC para idade</label><br><br>
+    <button onclick="imprimirGraficos()">Imprimir selecionados</button>
+  </div>
+</div>
+
 <body>
   <div class="container">
     <h1>Calculadora de Z-Score Infantil (OMS)</h1>
+    <p class="subtitulo"> Baseada nas curvas de referência da OMS para população geral (0-19 anos)</p>
 
     <div class="form-grid">
       <label>Data de Nascimento:<input type="date" id="nascimento"></label>
@@ -27,7 +40,7 @@
     </div>
 
     <button onclick="calcular()">Calcular</button>
-
+    <button id="btnImprimir" onclick="abrirModalImpressao()">🖨️ Imprimir gráficos</button>
     <pre id="resultado"></pre>
 
     <h2>Gráficos de Crescimento</h2>
@@ -41,4 +54,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
