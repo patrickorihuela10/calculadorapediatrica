@@ -588,14 +588,15 @@ if (idadeMeses <= 120 && !isNaN(zW)) {
   texto.push(`Peso: ${peso.toFixed(1)} kg`);
 }
 
-// IMC: omite Z em adultos (>=19 anos)
+// IMC: omite Z apenas em adultos (>=19 anos)
 if (idadeAnos >= 19) {
   texto.push(`IMC: ${imc.toFixed(2)} → ${interpretarZ(zB, "imc", idadeMeses, imc)}`);
-} else if (!isNaN(zB) && Math.abs(zB) <= 3) {
+} else if (!isNaN(zB)) {
   texto.push(`IMC: ${imc.toFixed(2)} → Z = ${zB.toFixed(2)} (${interpretarZ(zB, "imc", idadeMeses, imc)})`);
 } else {
   texto.push(`IMC: ${imc.toFixed(2)} → ${interpretarZ(zB, "imc", idadeMeses, imc)}`);
 }
+
 
 if (target) {
   texto.push(
