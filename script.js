@@ -143,9 +143,30 @@ function sdAt(L, M, S, z) {
   if (Math.abs(L) < 1e-9) return M * Math.exp(S * z);
   return M * Math.pow(1 + L * S * z, 1 / L);
 }
-function calcZ(x, L, M, S) {
+
+function calcZ(x, L, M, S, tipo) {
   if (!L || !M || !S) return NaN;
-  return ((x / M) ** L - 1) / (L * S);
+
+  // === Cálculo padrão LMS ===
+  let z = ((x / M) ** L - 1) / (L * S);
+
+  // === Correção OMS para |Z| > 3 (peso e IMC apenas) ===
+  if ((tipo === "peso" || tipo === "imc") && Math.abs(z) > 3) {
+    const sd3pos = sdAt(L, M, S, 3);
+    const sd2pos = sdAt(L, M, S, 2);
+    const sd3neg = sdAt(L, M, S, -3);
+    const sd2neg = sdAt(L, M, S, -2);
+
+    if (x > sd3pos) {
+      // acima de +3 SD
+      z = 3 + (x - sd3pos) / (sd3pos - sd2pos);
+    } else if (x < sd3neg) {
+      // abaixo de -3 SD
+      z = -3 - (sd2neg - x) / (sd2neg - sd3neg);
+    }
+  }
+
+  return z;
 }
 
 function calcTargetRange(sexo, pai, mae) {
@@ -560,9 +581,10 @@ function calcular() {
   }
 
   const imc = peso / ((altura / 100) ** 2);
-  const zH = calcZ(altura, LMS_h.L, LMS_h.M, LMS_h.S);
-  const zW = LMS_w ? calcZ(peso, LMS_w.L, LMS_w.M, LMS_w.S) : NaN;
-  const zB = calcZ(imc, LMS_b.L, LMS_b.M, LMS_b.S);
+  const zH = calcZ(altura, LMS_h.L, LMS_h.M, LMS_h.S, "altura");
+const zW = LMS_w ? calcZ(peso, LMS_w.L, LMS_w.M, LMS_w.S, "peso") : NaN;
+const zB = calcZ(imc, LMS_b.L, LMS_b.M, LMS_b.S, "imc");
+
 
   let target = null;
   if (!isNaN(pai) && !isNaN(mae)) {
